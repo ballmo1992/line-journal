@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ทบทวนความรู้สึก</title>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding: 30px;">
+
+<h2>พื้นที่ทบทวนความรู้สึก</h2>
+
+<p style="color:red;">
+ระบบนี้ไม่บันทึกข้อความ กรุณาอย่าระบุข้อมูลส่วนตัว
+</p>
+
+<textarea id="text" rows="10" cols="40"
+placeholder="พิมพ์ความรู้สึกของคุณ..."
+style="width:90%; max-width:400px;"></textarea>
+
+<br><br>
+
+<button onclick="send()" style="padding:10px 20px; font-size:16px;">
+ส่ง
+</button>
+
+<p id="msg" style="margin-top:20px; color:green;"></p>
+
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbw2FyrocS6pzC3LrwZwm5BEzlqlippO884DBb8BUe50T90b5g9iBw0nlYPVfWOOAXzGMg/exec";
+
+function hit(type) {
+  const img = new Image();
+  img.src = scriptURL + "?type=" + type + "&t=" + new Date().getTime();
+}
+
+// นับตอนเปิดหน้า
+window.onload = function() {
+  hit("open");
+}
+
+// นับตอนกดส่ง
+function send() {
+  document.getElementById("text").value = "";
+  document.getElementById("msg").innerHTML = "ขอบคุณที่ทบทวนความรู้สึก 💙";
+  hit("submit");
+}
+</script>
+
+</body>
+</html>
