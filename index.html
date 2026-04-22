@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html lang="th"> 
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>พื้นที่ทบทวนความรู้สึก</title>
+
   <style>
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
       background: url("bg.png") no-repeat center center/cover;
+      background-attachment: fixed;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card {
@@ -21,11 +36,14 @@
       max-width: 520px;
       padding: 30px;
       border-radius: 25px;
-      background: rgba(255,255,255,0.35);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
       text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -37,14 +55,16 @@
     .subtitle {
       color: #5d6d7e;
       margin: 10px 0 20px;
+      line-height: 1.6;
     }
 
     .warning {
-      background: rgba(255,255,255,0.6);
+      background: rgba(255, 255, 255, 0.45);
       padding: 12px;
       border-radius: 14px;
       color: #c0392b;
       margin-bottom: 15px;
+      font-size: 15px;
     }
 
     textarea {
@@ -54,49 +74,223 @@
       border: none;
       padding: 15px;
       font-size: 16px;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255, 255, 255, 0.55);
       outline: none;
       box-sizing: border-box;
+      resize: vertical;
+      color: #2c3e50;
+    }
+
+    textarea::placeholder {
+      color: #7f8c8d;
     }
 
     button {
-      margin-top: 15px;
-      padding: 12px 20px;
+      margin-top: 18px;
+      padding: 12px 24px;
       border: none;
-      border-radius: 20px;
+      border-radius: 22px;
       font-size: 16px;
       cursor: pointer;
-      background: linear-gradient(135deg,#7aa7ff,#ff9ed2);
+      background: linear-gradient(135deg, #7aa7ff, #ff9ed2);
       color: white;
+      box-shadow: 0 6px 18px rgba(122, 167, 255, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 22px rgba(255, 158, 210, 0.28);
     }
 
     #msg {
-      margin-top: 10px;
+      margin-top: 14px;
       color: #27ae60;
+      font-weight: 600;
+      min-height: 24px;
+    }
+
+    .top-heart {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .bottom-note {
+      margin-top: 12px;
+      color: #6c7a89;
+      font-size: 14px;
+    }
+
+    .floating-hearts,
+    .floating-petals,
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .floating-hearts span {
+      position: absolute;
+      bottom: -40px;
+      font-size: 22px;
+      opacity: 0.65;
+      animation: heartFloat linear infinite;
+    }
+
+    .floating-hearts span:nth-child(1) { left: 8%;  animation-duration: 11s; animation-delay: 0s; }
+    .floating-hearts span:nth-child(2) { left: 22%; animation-duration: 9s;  animation-delay: 2s; }
+    .floating-hearts span:nth-child(3) { left: 38%; animation-duration: 12s; animation-delay: 4s; }
+    .floating-hearts span:nth-child(4) { left: 58%; animation-duration: 10s; animation-delay: 1s; }
+    .floating-hearts span:nth-child(5) { left: 76%; animation-duration: 13s; animation-delay: 3s; }
+    .floating-hearts span:nth-child(6) { left: 90%; animation-duration: 9s;  animation-delay: 5s; }
+
+    @keyframes heartFloat {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.55;
+      }
+      50% {
+        transform: translateY(-45vh) translateX(12px) scale(1) rotate(8deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-110vh) translateX(-8px) scale(1.08) rotate(-8deg);
+        opacity: 0;
+      }
+    }
+
+    .floating-petals span {
+      position: absolute;
+      top: -40px;
+      font-size: 22px;
+      opacity: 0.7;
+      animation: petalFall linear infinite;
+    }
+
+    .floating-petals span:nth-child(1) { left: 12%; animation-duration: 12s; animation-delay: 0s; }
+    .floating-petals span:nth-child(2) { left: 28%; animation-duration: 14s; animation-delay: 2s; }
+    .floating-petals span:nth-child(3) { left: 47%; animation-duration: 11s; animation-delay: 4s; }
+    .floating-petals span:nth-child(4) { left: 66%; animation-duration: 13s; animation-delay: 1s; }
+    .floating-petals span:nth-child(5) { left: 82%; animation-duration: 15s; animation-delay: 3s; }
+
+    @keyframes petalFall {
+      0% {
+        transform: translateY(-20px) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.75;
+      }
+      50% {
+        transform: translateY(45vh) translateX(30px) rotate(120deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(110vh) translateX(-35px) rotate(260deg);
+        opacity: 0;
+      }
+    }
+
+    .sparkles span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.95),
+        0 0 16px rgba(255, 220, 245, 0.65);
+      animation: twinkle ease-in-out infinite;
+    }
+
+    .sparkles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 2.4s; }
+    .sparkles span:nth-child(2) { top: 18%; left: 72%; animation-duration: 3.1s; }
+    .sparkles span:nth-child(3) { top: 36%; left: 86%; animation-duration: 2.8s; }
+    .sparkles span:nth-child(4) { top: 58%; left: 12%; animation-duration: 3.4s; }
+    .sparkles span:nth-child(5) { top: 72%; left: 78%; animation-duration: 2.6s; }
+    .sparkles span:nth-child(6) { top: 84%; left: 30%; animation-duration: 3.0s; }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.7);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.35);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 22px;
+        border-radius: 22px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      textarea {
+        height: 160px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="floating-hearts" aria-hidden="true">
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+  </div>
+
+  <div class="floating-petals" aria-hidden="true">
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+  </div>
+
+  <div class="sparkles" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
   <div class="card">
-    <div style="font-size:30px; margin-bottom:10px;">💗</div>
+    <div class="top-heart">💗</div>
+
     <h1>พื้นที่ทบทวนความรู้สึก</h1>
     <p class="subtitle">ให้คุณได้กลับมาฟังความรู้สึกของตัวเองอย่างอ่อนโยน</p>
 
     <div class="warning">
-      ระบบนี้ไม่บันทึกข้อความ กรุณาหลีกเลี่ยงข้อมูลส่วนตัว
+      ระบบนี้ไม่บันทึกข้อความ กรุณาหลีกเลี่ยงการระบุข้อมูลส่วนตัว
     </div>
 
-    <textarea id="text" placeholder="พิมพ์ความรู้สึกของคุณ..."></textarea>
+    <textarea id="text" placeholder="พิมพ์ความรู้สึก ความคิด หรือสิ่งที่อยากทบทวนในตอนนี้..."></textarea>
 
     <button onclick="send()">💗 ส่งข้อความ</button>
 
     <p id="msg"></p>
+    <div class="bottom-note">ลองหายใจเข้าลึก ๆ ช้า ๆ ก่อนเริ่มพิมพ์นะคะ</div>
   </div>
 
   <script>
     function send() {
       document.getElementById("text").value = "";
-      document.getElementById("msg").innerHTML = "ขอบคุณที่ดูแลความรู้สึกของตัวเอง 💙";
+      document.getElementById("msg").innerHTML = "ขอบคุณที่ให้เวลากับความรู้สึกของตัวเอง 💙";
     }
   </script>
 </body>
