@@ -286,10 +286,26 @@
     
 
   <script>
-    function send() {
-      document.getElementById("text").value = "";
-      document.getElementById("msg").innerHTML = "ขอบคุณที่ให้เวลากับความรู้สึกของตัวเอง 💙";
-    }
-  </script>
+  const scriptURL = "1lewrp8Sae-FEy3w7tBhUtz2q3CWNAeL4e2Ac0qQNBH0";
+  let submitted = false;
+
+  function hit(type) {
+    const img = new Image();
+    img.src = scriptURL + "?type=" + type + "&t=" + new Date().getTime();
+  }
+
+  window.onload = function () {
+    hit("open");
+  };
+
+  function send() {
+    if (submitted) return;
+    submitted = true;
+
+    document.getElementById("text").value = "";
+    document.getElementById("msg").innerHTML = "ขอบคุณที่ให้เวลากับความรู้สึกของตัวเอง 💙";
+    hit("submit");
+  }
+</script>
 </body>
 </html>
