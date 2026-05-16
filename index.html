@@ -16,7 +16,6 @@
       align-items: center;
       min-height: 100vh;
       padding: 20px;
-      overflow: hidden;
       animation: fadeIn 1.2s ease;
     }
 
@@ -33,17 +32,15 @@
 
     .card {
       width: 90%;
-      max-width: 520px;
+      max-width: 560px;
       padding: 30px;
       border-radius: 25px;
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.20);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.35);
-      position: relative;
-      z-index: 2;
     }
 
     h1 {
@@ -59,34 +56,40 @@
     }
 
     .warning {
-      background: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.55);
       padding: 12px;
       border-radius: 14px;
-      color: #c0392b;
+      color: #8e44ad;
       margin-bottom: 15px;
       font-size: 15px;
+      line-height: 1.6;
+    }
+
+    input, textarea {
+      width: 100%;
+      border-radius: 15px;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.70);
+      outline: none;
+      box-sizing: border-box;
+      color: #2c3e50;
+      margin-bottom: 12px;
     }
 
     textarea {
-      width: 100%;
       height: 180px;
-      border-radius: 15px;
-      border: none;
-      padding: 15px;
-      font-size: 16px;
-      background: rgba(255, 255, 255, 0.55);
-      outline: none;
-      box-sizing: border-box;
       resize: vertical;
-      color: #2c3e50;
     }
 
+    input::placeholder,
     textarea::placeholder {
       color: #7f8c8d;
     }
 
     button {
-      margin-top: 18px;
+      margin-top: 8px;
       padding: 12px 24px;
       border: none;
       border-radius: 22px;
@@ -101,6 +104,11 @@
     button:hover {
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 10px 22px rgba(255, 158, 210, 0.28);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     #msg {
@@ -121,111 +129,6 @@
       font-size: 14px;
     }
 
-    .floating-hearts,
-    .floating-petals,
-    .sparkles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    .floating-hearts span {
-      position: absolute;
-      bottom: -40px;
-      font-size: 22px;
-      opacity: 0.65;
-      animation: heartFloat linear infinite;
-    }
-
-    .floating-hearts span:nth-child(1) { left: 8%;  animation-duration: 11s; animation-delay: 0s; }
-    .floating-hearts span:nth-child(2) { left: 22%; animation-duration: 9s;  animation-delay: 2s; }
-    .floating-hearts span:nth-child(3) { left: 38%; animation-duration: 12s; animation-delay: 4s; }
-    .floating-hearts span:nth-child(4) { left: 58%; animation-duration: 10s; animation-delay: 1s; }
-    .floating-hearts span:nth-child(5) { left: 76%; animation-duration: 13s; animation-delay: 3s; }
-    .floating-hearts span:nth-child(6) { left: 90%; animation-duration: 9s;  animation-delay: 5s; }
-
-    @keyframes heartFloat {
-      0% {
-        transform: translateY(0) scale(0.8) rotate(0deg);
-        opacity: 0;
-      }
-      15% {
-        opacity: 0.55;
-      }
-      50% {
-        transform: translateY(-45vh) translateX(12px) scale(1) rotate(8deg);
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-110vh) translateX(-8px) scale(1.08) rotate(-8deg);
-        opacity: 0;
-      }
-    }
-
-    .floating-petals span {
-      position: absolute;
-      top: -40px;
-      font-size: 22px;
-      opacity: 0.7;
-      animation: petalFall linear infinite;
-    }
-
-    .floating-petals span:nth-child(1) { left: 12%; animation-duration: 12s; animation-delay: 0s; }
-    .floating-petals span:nth-child(2) { left: 28%; animation-duration: 14s; animation-delay: 2s; }
-    .floating-petals span:nth-child(3) { left: 47%; animation-duration: 11s; animation-delay: 4s; }
-    .floating-petals span:nth-child(4) { left: 66%; animation-duration: 13s; animation-delay: 1s; }
-    .floating-petals span:nth-child(5) { left: 82%; animation-duration: 15s; animation-delay: 3s; }
-
-    @keyframes petalFall {
-      0% {
-        transform: translateY(-20px) translateX(0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.75;
-      }
-      50% {
-        transform: translateY(45vh) translateX(30px) rotate(120deg);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(110vh) translateX(-35px) rotate(260deg);
-        opacity: 0;
-      }
-    }
-
-    .sparkles span {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow:
-        0 0 8px rgba(255, 255, 255, 0.95),
-        0 0 16px rgba(255, 220, 245, 0.65);
-      animation: twinkle ease-in-out infinite;
-    }
-
-    .sparkles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 2.4s; }
-    .sparkles span:nth-child(2) { top: 18%; left: 72%; animation-duration: 3.1s; }
-    .sparkles span:nth-child(3) { top: 36%; left: 86%; animation-duration: 2.8s; }
-    .sparkles span:nth-child(4) { top: 58%; left: 12%; animation-duration: 3.4s; }
-    .sparkles span:nth-child(5) { top: 72%; left: 78%; animation-duration: 2.6s; }
-    .sparkles span:nth-child(6) { top: 84%; left: 30%; animation-duration: 3.0s; }
-
-    @keyframes twinkle {
-      0%, 100% {
-        opacity: 0.2;
-        transform: scale(0.7);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.35);
-      }
-    }
-
     @media (max-width: 600px) {
       .card {
         padding: 22px;
@@ -242,59 +145,92 @@
     }
   </style>
 </head>
+
 <body>
-  <div class="floating-hearts" aria-hidden="true">
-    <span>💗</span>
-    <span>💗</span>
-    <span>💗</span>
-    <span>💗</span>
-    <span>💗</span>
-    <span>💗</span>
-  </div>
-
-  <div class="floating-petals" aria-hidden="true">
-    <span>🌸</span>
-    <span>🌸</span>
-    <span>🌸</span>
-    <span>🌸</span>
-    <span>🌸</span>
-  </div>
-
-  <div class="sparkles" aria-hidden="true">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
   <div class="card">
     <div class="top-heart">💗</div>
 
     <h1>พื้นที่ทบทวนความรู้สึก</h1>
-    <p class="subtitle">ให้คุณได้กลับมาฟังความรู้สึกของตัวเองอย่างอ่อนโยน พื้นที่นี้ไม่มีการบันทึกข้อมูล สบายใจได้</p>
+
+    <p class="subtitle">
+      กรุณากรอกข้อมูลและเขียนทบทวนความรู้สึกของตนเอง
+    </p>
 
     <div class="warning">
-      ทบทวนความรู้สึกของตนเอง 
-      อย่างน้อย 3-5 ครั้ง/สัปดาห์ ครั้งละ 15-20 นาที/ครั้ง
-      ทบทวนตามแนวคิด CBT ดังนี้ เกิดอะไรขึ้น? คิดอะไร? รู้สึกอย่างไร? ตอบสนองอย่างไร? และมองใหม่ได้อย่างไร?
-
+      เขียนทบทวนตามแนวคิด CBT เช่น  
+      เกิดอะไรขึ้น? คิดอะไร? รู้สึกอย่างไร? ตอบสนองอย่างไร? และมองใหม่ได้อย่างไร?
     </div>
 
-    <textarea id="text" placeholder="พิมพ์ความรู้สึก ความคิด หรือสิ่งที่อยากทบทวนในตอนนี้..."></textarea>
+    <input type="text" id="firstName" placeholder="ชื่อ">
+    <input type="text" id="lastName" placeholder="นามสกุล">
+    <input type="text" id="address" placeholder="ที่อยู่ / อำเภอ / จังหวัด">
 
-    <button onclick="send()">💗 ปลดปล่อยความรู้สึกนี้</button>
+    <textarea id="writing" placeholder="พิมพ์ข้อความทบทวนความรู้สึกของคุณที่นี่..."></textarea>
+
+    <button id="sendBtn" onclick="sendData()">💗 ส่งข้อมูล</button>
 
     <p id="msg"></p>
-    <div class="bottom-note">ลองหายใจเข้าลึก ๆ ช้า ๆ ก่อนเริ่มพิมพ์นะคะ</div>
+
+    <div class="bottom-note">
+      ขอบคุณที่ให้เวลากับความรู้สึกของตัวเอง
+    </div>
   </div>
 
   <script>
-    function send() {
-      document.getElementById("text").value = "";
-      document.getElementById("msg").innerHTML = "ขอบคุณที่ให้เวลากับความรู้สึกของตัวเอง 💙";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyR8_zpv-jKM9jeaKyZJWcSLlLEDrx4hOKUicd9r73J0nzHYfc56VjtHjKM3AKcqEQU/exec";
+
+    function sendData() {
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const writing = document.getElementById("writing").value.trim();
+      const msg = document.getElementById("msg");
+      const sendBtn = document.getElementById("sendBtn");
+
+      if (!firstName || !lastName || !address || !writing) {
+        msg.style.color = "#c0392b";
+        msg.innerHTML = "กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ";
+        return;
+      }
+
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = "กำลังส่งข้อมูล...";
+      msg.style.color = "#5d6d7e";
+      msg.innerHTML = "โปรดรอสักครู่";
+
+      const data = {
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        writing: writing
+      };
+
+      fetch(scriptURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(() => {
+        msg.style.color = "#27ae60";
+        msg.innerHTML = "บันทึกข้อมูลเรียบร้อยแล้วค่ะ 💙";
+
+        document.getElementById("firstName").value = "";
+        document.getElementById("lastName").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("writing").value = "";
+      })
+      .catch(() => {
+        msg.style.color = "#c0392b";
+        msg.innerHTML = "ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง";
+      })
+      .finally(() => {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = "💗 ส่งข้อมูล";
+      });
     }
   </script>
 </body>
-</html>
+</html>F
