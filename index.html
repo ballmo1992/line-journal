@@ -177,60 +177,43 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyR8_zpv-jKM9jeaKyZJWcSLlLEDrx4hOKUicd9r73J0nzHYfc56VjtHjKM3AKcqEQU/exec";
 
-    function sendData() {
-      const firstName = document.getElementById("firstName").value.trim();
-      const lastName = document.getElementById("lastName").value.trim();
-      const address = document.getElementById("address").value.trim();
-      const writing = document.getElementById("writing").value.trim();
-      const msg = document.getElementById("msg");
-      const sendBtn = document.getElementById("sendBtn");
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwhmVlJiWw9fDjXNKHmU7gqhIcJwV-2AELg-r-M3X1lCvz7249PEhX9oYV5ueqQu3eL/exec";
 
-      if (!firstName || !lastName || !address || !writing) {
-        msg.style.color = "#c0392b";
-        msg.innerHTML = "กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ";
-        return;
-      }
+  function send() {
+    const text = document.getElementById("text").value.trim();
+    const msg = document.getElementById("msg");
 
-      sendBtn.disabled = true;
-      sendBtn.innerHTML = "กำลังส่งข้อมูล...";
-      msg.style.color = "#5d6d7e";
-      msg.innerHTML = "โปรดรอสักครู่";
-
-      const data = {
-        firstName: firstName,
-        lastName: lastName,
-        address: address,
-        writing: writing
-      };
-
-      fetch(scriptURL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
-        msg.style.color = "#27ae60";
-        msg.innerHTML = "บันทึกข้อมูลเรียบร้อยแล้วค่ะ 💙";
-
-        document.getElementById("firstName").value = "";
-        
-        
-        
-      })
-      .catch(() => {
-        msg.style.color = "#c0392b";
-        msg.innerHTML = "ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง";
-      })
-      .finally(() => {
-        sendBtn.disabled = false;
-        sendBtn.innerHTML = "💗 ส่งข้อมูล";
-      });
+    if (text === "") {
+      msg.style.color = "#c0392b";
+      msg.innerHTML = "กรุณาพิมพ์ข้อความก่อนส่งค่ะ";
+      return;
     }
+
+    msg.style.color = "#5d6d7e";
+    msg.innerHTML = "กำลังบันทึกข้อมูล...";
+
+    const formData = new FormData();
+    formData.append("name", "");
+    formData.append("surname", "");
+    formData.append("address", "");
+    formData.append("writing", text);
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+    .then(() => {
+      document.getElementById("text").value = "";
+      msg.style.color = "#27ae60";
+      msg.innerHTML = "บันทึกข้อมูลเรียบร้อยแล้วค่ะ 💙";
+    })
+    .catch(() => {
+      msg.style.color = "#c0392b";
+      msg.innerHTML = "บันทึกไม่สำเร็จ กรุณาตรวจสอบลิงก์ Apps Script";
+    });
+  }
+
   </script>
 </body>
 </html>F
