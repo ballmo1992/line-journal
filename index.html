@@ -17,6 +17,7 @@
       min-height: 100vh;
       padding: 20px;
       animation: fadeIn 1.2s ease;
+      overflow-x: hidden;
     }
 
     @keyframes fadeIn {
@@ -35,12 +36,14 @@
       max-width: 560px;
       padding: 30px;
       border-radius: 25px;
-      background: rgba(255, 255, 255, 0.20);
+      background: rgba(255, 255, 255, 0.22);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.35);
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -56,7 +59,7 @@
     }
 
     .warning {
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.50);
       padding: 12px;
       border-radius: 14px;
       color: #8e44ad;
@@ -65,32 +68,34 @@
       line-height: 1.6;
     }
 
-    input, textarea {
+    .input-box,
+    textarea {
       width: 100%;
       border-radius: 15px;
       border: none;
       padding: 14px;
       font-size: 16px;
-      background: rgba(255, 255, 255, 0.70);
+      background: rgba(255, 255, 255, 0.65);
       outline: none;
       box-sizing: border-box;
       color: #2c3e50;
       margin-bottom: 12px;
     }
 
-    textarea {
-      height: 180px;
-      resize: vertical;
-    }
-
-    input::placeholder,
+    .input-box::placeholder,
     textarea::placeholder {
       color: #7f8c8d;
     }
 
+    textarea {
+      height: 180px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
     button {
       margin-top: 8px;
-      padding: 12px 24px;
+      padding: 12px 26px;
       border: none;
       border-radius: 22px;
       font-size: 16px;
@@ -109,13 +114,14 @@
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
     }
 
     #msg {
       margin-top: 14px;
-      color: #27ae60;
       font-weight: 600;
       min-height: 24px;
+      line-height: 1.5;
     }
 
     .top-heart {
@@ -127,6 +133,111 @@
       margin-top: 12px;
       color: #6c7a89;
       font-size: 14px;
+    }
+
+    .floating-hearts,
+    .floating-petals,
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .floating-hearts span {
+      position: absolute;
+      bottom: -40px;
+      font-size: 22px;
+      opacity: 0.65;
+      animation: heartFloat linear infinite;
+    }
+
+    .floating-hearts span:nth-child(1) { left: 8%;  animation-duration: 11s; animation-delay: 0s; }
+    .floating-hearts span:nth-child(2) { left: 22%; animation-duration: 9s;  animation-delay: 2s; }
+    .floating-hearts span:nth-child(3) { left: 38%; animation-duration: 12s; animation-delay: 4s; }
+    .floating-hearts span:nth-child(4) { left: 58%; animation-duration: 10s; animation-delay: 1s; }
+    .floating-hearts span:nth-child(5) { left: 76%; animation-duration: 13s; animation-delay: 3s; }
+    .floating-hearts span:nth-child(6) { left: 90%; animation-duration: 9s;  animation-delay: 5s; }
+
+    @keyframes heartFloat {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.55;
+      }
+      50% {
+        transform: translateY(-45vh) translateX(12px) scale(1) rotate(8deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-110vh) translateX(-8px) scale(1.08) rotate(-8deg);
+        opacity: 0;
+      }
+    }
+
+    .floating-petals span {
+      position: absolute;
+      top: -40px;
+      font-size: 22px;
+      opacity: 0.7;
+      animation: petalFall linear infinite;
+    }
+
+    .floating-petals span:nth-child(1) { left: 12%; animation-duration: 12s; animation-delay: 0s; }
+    .floating-petals span:nth-child(2) { left: 28%; animation-duration: 14s; animation-delay: 2s; }
+    .floating-petals span:nth-child(3) { left: 47%; animation-duration: 11s; animation-delay: 4s; }
+    .floating-petals span:nth-child(4) { left: 66%; animation-duration: 13s; animation-delay: 1s; }
+    .floating-petals span:nth-child(5) { left: 82%; animation-duration: 15s; animation-delay: 3s; }
+
+    @keyframes petalFall {
+      0% {
+        transform: translateY(-20px) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.75;
+      }
+      50% {
+        transform: translateY(45vh) translateX(30px) rotate(120deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(110vh) translateX(-35px) rotate(260deg);
+        opacity: 0;
+      }
+    }
+
+    .sparkles span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.95),
+        0 0 16px rgba(255, 220, 245, 0.65);
+      animation: twinkle ease-in-out infinite;
+    }
+
+    .sparkles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 2.4s; }
+    .sparkles span:nth-child(2) { top: 18%; left: 72%; animation-duration: 3.1s; }
+    .sparkles span:nth-child(3) { top: 36%; left: 86%; animation-duration: 2.8s; }
+    .sparkles span:nth-child(4) { top: 58%; left: 12%; animation-duration: 3.4s; }
+    .sparkles span:nth-child(5) { top: 72%; left: 78%; animation-duration: 2.6s; }
+    .sparkles span:nth-child(6) { top: 84%; left: 30%; animation-duration: 3.0s; }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.7);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.35);
+      }
     }
 
     @media (max-width: 600px) {
@@ -147,6 +258,32 @@
 </head>
 
 <body>
+  <div class="floating-hearts" aria-hidden="true">
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+    <span>💗</span>
+  </div>
+
+  <div class="floating-petals" aria-hidden="true">
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+    <span>🌸</span>
+  </div>
+
+  <div class="sparkles" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
   <div class="card">
     <div class="top-heart">💗</div>
 
@@ -157,78 +294,84 @@
     </p>
 
     <div class="warning">
-      เขียนทบทวนตามแนวคิด CBT เช่น  
-      เกิดอะไรขึ้น? คิดอะไร? รู้สึกอย่างไร? ตอบสนองอย่างไร? และมองใหม่ได้อย่างไร?
+      ข้อมูลที่กรอกจะถูกบันทึกเพื่อใช้ในการดำเนินงาน/การวิจัย 
+      และจะเก็บรักษาเป็นความลับ
+      <br><br>
+      ทบทวนตามแนวคิด CBT: เกิดอะไรขึ้น? คิดอะไร? รู้สึกอย่างไร? 
+      ตอบสนองอย่างไร? และมองใหม่ได้อย่างไร?
     </div>
 
-    <input type="text" id="firstName" placeholder="ชื่อ">
-    <input type="text" id="lastName" placeholder="นามสกุล">
-    <input type="text" id="address" placeholder="ที่อยู่ / อำเภอ / จังหวัด">
+    <input id="name" class="input-box" type="text" placeholder="ชื่อ">
+    <input id="surname" class="input-box" type="text" placeholder="นามสกุล">
+    <input id="address" class="input-box" type="text" placeholder="ที่อยู่ / อำเภอ / จังหวัด">
 
-    <textarea id="writing" placeholder="พิมพ์ข้อความทบทวนความรู้สึกของคุณที่นี่..."></textarea>
+    <textarea id="writing" placeholder="พิมพ์ความรู้สึก ความคิด หรือสิ่งที่อยากทบทวนในตอนนี้..."></textarea>
 
-    <button id="sendBtn" onclick="sendData()">💗 ส่งข้อมูล</button>
+    <button id="sendBtn" onclick="sendData()">💗 บันทึกข้อมูล</button>
 
     <p id="msg"></p>
 
     <div class="bottom-note">
-      ขอบคุณที่ให้เวลากับความรู้สึกของตัวเอง
+      ลองหายใจเข้าลึก ๆ ช้า ๆ ก่อนเริ่มพิมพ์นะคะ
     </div>
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxYUJfi0oxCT2xfcykdc15c8KW2lxTO3mEbOMu3OQ5FtDZ8zYrueQR-MgfkWCnsBiRb/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzTdJ5PXlapQ82qE1s3DDOwp1fO80gSG8qvVc2Y_gcSJ-KFGK3PpvX27hdrHWnD8Ajc/exec";
 
     function sendData() {
-      const firstName = document.getElementById("firstName").value.trim();
-      const lastName = document.getElementById("lastName").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const surname = document.getElementById("surname").value.trim();
       const address = document.getElementById("address").value.trim();
       const writing = document.getElementById("writing").value.trim();
+
       const msg = document.getElementById("msg");
       const sendBtn = document.getElementById("sendBtn");
 
-      if (!firstName || !lastName || !address || !writing) {
+      if (!name || !surname || !address || !writing) {
         msg.style.color = "#c0392b";
         msg.innerHTML = "กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ";
         return;
       }
 
-      sendBtn.disabled = true;
-      sendBtn.innerHTML = "กำลังส่งข้อมูล...";
       msg.style.color = "#5d6d7e";
-      msg.innerHTML = "โปรดรอสักครู่";
+      msg.innerHTML = "กำลังบันทึกข้อมูล...";
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = "กำลังบันทึก...";
 
-      const data = {
-        firstName: firstName,
-        lastName: lastName,
-        address: address,
-        writing: writing
-      };
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("surname", surname);
+      formData.append("address", address);
+      formData.append("writing", writing);
 
       fetch(scriptURL, {
         method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+        body: formData
       })
-      .then(() => {
-        msg.style.color = "#27ae60";
-        msg.innerHTML = "บันทึกข้อมูลเรียบร้อยแล้วค่ะ 💙";
+      .then(response => response.text())
+      .then(result => {
+        console.log(result);
 
-        document.getElementById("firstName").value = "";
-        document.getElementById("lastName").value = "";
-        document.getElementById("address").value = "";
-        document.getElementById("writing").value = "";
+        msg.style.color = "#27ae60";
+        msg.innerHTML = "บันทึกข้อมูลลง Google Sheet เรียบร้อยแล้วค่ะ 💙";
+
+        /*
+          หมายเหตุ:
+          โค้ดนี้ตั้งใจไม่ล้างข้อมูลในช่องกรอก
+          เพื่อให้ข้อความที่พิมพ์ไว้ยังอยู่บนหน้าเว็บ
+          และข้อมูลเดิมใน Google Sheet ก็ไม่ถูกลบ เพราะใช้ appendRow()
+        */
       })
-      .catch(() => {
+      .catch(error => {
+        console.error("Error:", error);
+
         msg.style.color = "#c0392b";
-        msg.innerHTML = "ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง";
+        msg.innerHTML = "บันทึกไม่สำเร็จ กรุณาตรวจสอบลิงก์ Apps Script หรือการ Deploy";
       })
       .finally(() => {
         sendBtn.disabled = false;
-        sendBtn.innerHTML = "💗 ส่งข้อมูล";
+        sendBtn.innerHTML = "💗 บันทึกข้อมูล";
       });
     }
   </script>
