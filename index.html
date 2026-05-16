@@ -290,18 +290,20 @@
     <h1>พื้นที่ทบทวนความรู้สึก</h1>
 
     <p class="subtitle">
-      กรุณากรอกข้อมูลและเขียนทบทวนความรู้สึกของตนเอง
+      กรุณากรอกรหัสแทนชื่อและเขียนทบทวนความรู้สึกของตนเอง
     </p>
 
     <div class="warning">
       ข้อมูลที่กรอกจะถูกบันทึกเพื่อใช้ในการดำเนินงาน/การวิจัย 
       และจะเก็บรักษาเป็นความลับ
       <br><br>
+      กรุณาใช้ <b>รหัสแทนชื่อ</b> เท่านั้น ไม่ต้องกรอกชื่อ นามสกุล หรือที่อยู่จริง
+      <br><br>
       ทบทวนตามแนวคิด CBT: เกิดอะไรขึ้น? คิดอะไร? รู้สึกอย่างไร? 
       ตอบสนองอย่างไร? และมองใหม่ได้อย่างไร?
     </div>
 
-   <input id="code" class="input-box" type="text" placeholder="รหัสแทนชื่อ">
+    <input id="code" class="input-box" type="text" placeholder="รหัสแทนชื่อ เช่น A001">
 
     <textarea id="writing" placeholder="พิมพ์ความรู้สึก ความคิด หรือสิ่งที่อยากทบทวนในตอนนี้..."></textarea>
 
@@ -318,17 +320,15 @@
     const scriptURL = "https://script.google.com/macros/s/AKfycbzTdJ5PXlapQ82qE1s3DDOwp1fO80gSG8qvVc2Y_gcSJ-KFGK3PpvX27hdrHWnD8Ajc/exec";
 
     function sendData() {
-      const name = document.getElementById("name").value.trim();
-      const surname = document.getElementById("surname").value.trim();
-      const address = document.getElementById("address").value.trim();
+      const code = document.getElementById("code").value.trim();
       const writing = document.getElementById("writing").value.trim();
 
       const msg = document.getElementById("msg");
       const sendBtn = document.getElementById("sendBtn");
 
-      if (!name || !surname || !address || !writing) {
+      if (!code || !writing) {
         msg.style.color = "#c0392b";
-        msg.innerHTML = "กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ";
+        msg.innerHTML = "กรุณากรอกรหัสแทนชื่อและข้อความให้ครบค่ะ";
         return;
       }
 
@@ -338,9 +338,7 @@
       sendBtn.innerHTML = "กำลังบันทึก...";
 
       const formData = new FormData();
-      formData.append("name", name);
-      formData.append("surname", surname);
-      formData.append("address", address);
+      formData.append("code", code);
       formData.append("writing", writing);
 
       fetch(scriptURL, {
@@ -355,10 +353,10 @@
         msg.innerHTML = "บันทึกข้อมูลลง Google Sheet เรียบร้อยแล้วค่ะ 💙";
 
         /*
-          หมายเหตุ:
           โค้ดนี้ตั้งใจไม่ล้างข้อมูลในช่องกรอก
           เพื่อให้ข้อความที่พิมพ์ไว้ยังอยู่บนหน้าเว็บ
-          และข้อมูลเดิมใน Google Sheet ก็ไม่ถูกลบ เพราะใช้ appendRow()
+          และข้อมูลเดิมใน Google Sheet ไม่ถูกลบ
+          เพราะฝั่ง Google Apps Script ควรใช้ appendRow()
         */
       })
       .catch(error => {
